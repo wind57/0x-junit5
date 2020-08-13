@@ -1,0 +1,5 @@
+= 0x-junit5
+
+just the example from here : https://stackoverflow.com/questions/46613214/java-9-maven-junit-does-test-code-need-module-info-java-of-its-own-and-wher/63386799#63386799
+
+It mainly explains testing with java modules + junit5; a rather simplistic example.
