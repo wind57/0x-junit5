@@ -1,0 +1,60 @@
+plugins {
+    id 'java'
+    id 'java-library'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_14
+    targetCompatibility = JavaVersion.VERSION_14
+}
+
+
+dependencies {
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.7.0-M1'
+    testCompile 'org.junit.jupiter:junit-jupiter-engine:5.7.0-M1'
+    implementation 'com.google.guava:guava:29.0-jre'
+
+
+}
+
+test {
+    // Use junit platform for unit tests
+    useJUnitPlatform()
+
+    systemProperties = [
+            "junit.jupiter.extensions.autodetection.enabled": true
+    ]
+
+    // Always run tests, even when nothing changed.
+    dependsOn 'cleanTest'
+
+    // Show test results.
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+// enable
+plugins.withType(JavaPlugin).configureEach {
+    java {
+        modularity.inferModulePath = true
+    }
+}
+
+// needed for test in order to have "module-info.java" in tests
+
+def moduleName = "zero.x"
+def patchArgs = ["--patch-module", "$moduleName=${tasks.compileJava.destinationDirectory.asFile.get().path}"]
+tasks.compileTestJava {
+    options.compilerArgs += patchArgs
+}
+tasks.test {
+    jvmArgs += patchArgs
+}
