@@ -49,6 +49,7 @@ plugins.withType(JavaPlugin).configureEach {
 }
 
 // needed for test in order to have "module-info.java" in tests
+// and also because we need to register a single Extension for all tests
 def moduleName = "zero.x"
 def patchArgs = ["--patch-module", "$moduleName=${tasks.compileJava.destinationDirectory.asFile.get().path}"]
 tasks.compileTestJava {
