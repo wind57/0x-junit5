@@ -2,10 +2,10 @@ package zero.x.services;
 
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
-import zero.x.extensions.IntegrationExtension;
+import zero.x.extensions.CassandraIntegrationTest;
 import zero.x.extensions.IntegrationTest;
 
-@IntegrationExtension
+@CassandraIntegrationTest
 public class ServiceBTest {
 
     private final ServiceB serviceB = new ServiceB();

@@ -4,8 +4,14 @@ import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
+import org.junit.platform.commons.support.AnnotationSupport;
 
-public class IntegrationTestExtension implements BeforeAllCallback, AfterAllCallback {
+/**
+ * @author erabii
+ * <p>
+ * this is registered in module-info.java as the common extetnsio for all tests
+ */
+public class CommonForAllExtension implements BeforeAllCallback, AfterAllCallback {
 
     private volatile boolean initiated;
 
@@ -20,7 +26,16 @@ public class IntegrationTestExtension implements BeforeAllCallback, AfterAllCall
 
     @Override
     public void beforeAll(ExtensionContext context) {
-        initiatedOnlyOnce();
+
+        context.getTestClass().ifPresent(x -> {
+
+            // only init this for classes that are annotated with CassandraIntegrationTest
+            if (AnnotationSupport.isAnnotated(x, CassandraIntegrationTest.class)) {
+                initiatedOnlyOnce();
+            }
+        });
+
+
     }
 
     private void initiatedOnlyOnce() {
