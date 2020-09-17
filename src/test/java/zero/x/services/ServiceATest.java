@@ -10,6 +10,7 @@ public class ServiceATest {
 
     @Test
     public void testA() {
+        System.out.println("testA");
         List<String> list = serviceA.listWithTwoElements("one", "two");
         Assertions.assertEquals(list.size(), 2);
     }

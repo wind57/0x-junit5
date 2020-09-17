@@ -10,6 +10,7 @@ public class ServiceBTest {
 
     @Test
     public void testB() {
+        System.out.println("testB");
         Set<String> set = serviceB.setWithTwoElements("one", "two");
         Assertions.assertEquals(set.size(), 2);
     }
